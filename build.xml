@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8"?>
+<project name="Mod Campioni Gratuiti" basedir="." default="copy_to_test">
+ 
+ 		<property name="modname" value="campioni" override="true" />
+        <property name="test" value="../joomla1.5" override="true" />
+        <property name="testmod" value="${test}/modules/mod_${modname}" override="true" />
+        <property name="testadminmod" value="${test}/administrator/modules/mod_${modname}" override="true" />
+        <property name="src" value="${project.basedir}" override="true" />
+        
+        <fileset dir="${src}" id="module_files">
+                <include name="**" />
+        </fileset>
+        <!--<fileset dir="${src}/admin" id="module_admin_files">
+                <include name="**" />
+        </fileset>
+        --><fileset dir="${src}" id="allfiles">
+                <include name="**" />
+        </fileset>
+ 
+        <!-- Copy Target -->
+        <target name="copy_to_test" description="copy target">
+                <echo>Copying files from dev to test...
+                </echo>
+                <!--<copy todir="${testadminmod}">
+                        <fileset refid="module_admin_files" />
+                </copy>
+                --><copy file="${src}/mod_${modname}.xml" todir="${testadminmod}" />
+                
+                <echo msg="Copying site files if needed..." />
+                <copy todir="${testmod}">
+                        <fileset refid="module_files" />
+                </copy>
+                <!--  Archiving -->
+                <delete file="${src}/mod_${modname}_dev.zip" />
+                <zip destfile="${src}/mod_${modname}_dev.zip">
+                        <fileset refid="allfiles" />
+                </zip>
+                <!--<delete file="${src}/com_${modname}_dev.tar.gz" />
+                <tar destfile="${src}/com_${modname}_dev.tar.gz" compression="gzip">
+                        <fileset refid="allfiles" />
+                </tar>
+        --></target>
+</project>

@@ -1,0 +1,1 @@
+Modulo per il componente campioni
